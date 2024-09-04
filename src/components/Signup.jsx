@@ -14,8 +14,13 @@ function Signup(props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); 
+  const [isloading, setIsloading] = useState(false);
+
 
   async function handleSignup(e) {
+    
+    setIsloading(true);
+
     e.preventDefault();
     console.log('Name==>', name);
     console.log('Email==>', email);
@@ -25,9 +30,9 @@ function Signup(props) {
       const response = await createUserWithEmailAndPassword(auth, email, password);
       const uid = response.user.uid;
       const userData = { name: name, email: email, uid };
-
+         localStorage.setItem('userId', response.user.uid);
       await setDoc(doc(db, 'users', uid), userData);
-
+       setIsloading(false)
       console.log('Sign-up');
       
       Swal.fire({
@@ -48,6 +53,7 @@ function Signup(props) {
         icon: 'error',
         confirmButtonText: 'Okay'
       });
+      setIsloading(false)
     }
   }
 
@@ -98,6 +104,12 @@ function Signup(props) {
         </div>
 
         <div className="flex items-center justify-between">
+
+        {isloading ? 
+             <div className="w-full flex justify-center py-2 px-4 rounded">
+             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" className='h-12 w-12' />        
+             </div>
+              :
           <button
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
@@ -105,6 +117,7 @@ function Signup(props) {
           >
             Sign-Up
           </button>
+}
         </div>
 
         <div className='mt-6 text-center flex justify-between'>

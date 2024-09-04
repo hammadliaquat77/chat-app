@@ -3,13 +3,18 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { auth } from '../database/firebase.Config'; // Ensure you have the correct path to your firebase config
+// import Loading from './Loading';
+
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isloading, setIsloading] = useState(false);
+
   const handleSubmit = (e) => {
+    setIsloading(true)
     e.preventDefault();
 
     
@@ -18,6 +23,8 @@ function Login() {
       // Signed in successfully
       const user = userCredential.user;
       console.log('User signed in:', user);
+
+       setIsloading(false)
 
         Swal.fire({
           title: 'Login Successful!',
@@ -38,7 +45,9 @@ function Login() {
           icon: 'error',
           confirmButtonText: 'Retry',
         });
+        setIsloading(false)
       });
+
   };
 
   return (
@@ -75,12 +84,19 @@ function Login() {
             />
           </div>
           <div className="flex items-center justify-between">
+           {isloading ? 
+             <div className="w-full flex justify-center py-2 px-4 rounded">
+             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" className='h-12 w-12' />        
+             </div>
+              :
+          
             <button
               type="submit"
               className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
             >
               Login
             </button>
+}
           </div>
         </form>
         <div className='mt-6 text-center flex justify-between'>
