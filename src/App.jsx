@@ -14,9 +14,9 @@ export default function App( ) {
     { path: "/", element: <Loading />},
     { path: "/Login", element: <Login />},
     { path: "/Signup", element: <Signup />},
-    { path: "/home", element: <Home />},
+    { path: "/Home", element: <Home />},
     { path: "*", element: <NotFound />},
-    { path: "/chat", element: <Chat />},
+    { path: "/Chat", element: <Chat />},
 
   ]); 
 

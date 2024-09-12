@@ -32,7 +32,9 @@ function Login() {
           icon: 'success',
           confirmButtonText: 'Okay',
         });
-
+        
+        console.log('user is loggin');
+        
         navigate('/Home'); 
       })
       .catch((error) => {

@@ -25,6 +25,7 @@ function Signup(props) {
     console.log('Name==>', name);
     console.log('Email==>', email);
     console.log('Password==>', password);
+    
 
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
